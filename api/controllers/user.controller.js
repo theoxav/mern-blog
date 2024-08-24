@@ -23,6 +23,8 @@ export const signup = async (req, res, next) => {
 
   try {
     const newUser = await createUser(req.body);
+    console.log(newUser);
+
     res.status(201).json("Signup successfull !");
   } catch (e) {
     next(e);
