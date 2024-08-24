@@ -1,16 +1,9 @@
 import User from "../models/user.model.js";
-import bcryptjs from "bcryptjs";
 
-export const createUser = async (user) => {
+export const findUserByEmail = async (email) => {
   try {
-    const hashedPassword = await bcryptjs.hash(user.password, 10);
-    const newUser = new User({
-      username: user.username,
-      email: user.email,
-      password: hashedPassword,
-    });
-
-    return newUser.save();
+    const user = await User.findOne({ email });
+    return user;
   } catch (e) {
     throw e;
   }
