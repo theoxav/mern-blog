@@ -1,13 +1,21 @@
 import { useState } from "react";
-import { Button, Spinner, Alert } from "flowbite-react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { Button, Spinner } from "flowbite-react";
 import InputField from "../UI/InputField";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../../redux/user/userSlice";
+import ErrorAlert from "../UI/ErrorAlert";
 
 const SigninForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -16,12 +24,11 @@ const SigninForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      setErrorMessage("Please fill in all fields");
+      dispatch(signInFailure("Please fill in all fields"));
       return;
     }
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -31,14 +38,13 @@ const SigninForm = () => {
       });
       const data = await res.json();
       if (!res.ok) {
-        setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
+      dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      setErrorMessage(error.message);
-    } finally {
-      setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -76,11 +82,7 @@ const SigninForm = () => {
           Sign Up
         </Link>
       </div>
-      {errorMessage && (
-        <Alert className="mt-5" color="failure">
-          {errorMessage}
-        </Alert>
-      )}
+      {errorMessage && <ErrorAlert message={errorMessage} />}
     </>
   );
 };
