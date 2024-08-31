@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
-import InputField from "../UI/InputField";
+import InputField from "../UI/Forms/InputField";
 import {
   signInStart,
   signInSuccess,
   signInFailure,
 } from "../../redux/user/userSlice";
-import ErrorAlert from "../UI/ErrorAlert";
+import ErrorAlert from "../UI/Alert/ErrorAlert";
+import OAuth from "../UI/Auth/OAuth";
 
 const SigninForm = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const SigninForm = () => {
             "Sign In"
           )}
         </Button>
+        <OAuth />
       </form>
       <div className="flex gap-2 text-sm mt-5">
         <span>Dont have an account?</span>

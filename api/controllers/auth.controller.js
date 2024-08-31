@@ -3,6 +3,8 @@ import config from "../config/config.js";
 import { errorHandler } from "../utils/error.js";
 import { checkPassword, register } from "../repositories/auth.repository.js";
 import { findUserByEmail } from "../repositories/user.repository.js";
+import { generateToken } from "../utils/token.js";
+import bcryptjs from "bcryptjs";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -45,14 +47,33 @@ export const signin = async (req, res, next) => {
     if (!isPasswordValid) {
       return next(errorHandler(401, "Invalid credentials"));
     }
-    const token = jwt.sign({ id: validUser._id }, config.JWT_SECRET);
-    const { password: pass, ...rest } = validUser._doc;
-    res
-      .status(200)
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .json(rest);
+    generateToken(validUser, res);
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const google = async (req, res, next) => {
+  const { email, name, googlePhotoUrl } = req.body;
+
+  try {
+    const user = await findUserByEmail(email);
+    if (user) {
+      generateToken(user, res);
+    } else {
+      const generatedPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcryptjs.hashSync(generatedPassword, 10);
+
+      const newUser = await register({
+        username:
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+        email,
+        password: hashedPassword,
+        profilePicture: googlePhotoUrl,
+      });
+      generateToken(newUser, res);
+    }
   } catch (e) {
     next(e);
   }
