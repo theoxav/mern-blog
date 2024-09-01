@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import DashSidebar from "../components/profile/Layout/DashSidebar";
-import DashProfile from "../components/profile/DashProfile";
+import DashSidebar from "../components/Profile/Layout/DashSidebar";
+import DashProfile from "../components/Profile/DashProfile";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const location = useLocation();
   const [tab, setTab] = useState("");
 

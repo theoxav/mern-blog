@@ -5,7 +5,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../../redux/theme/themeSlice";
 
-export default function Header() {
+const Header = () => {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
@@ -84,4 +84,6 @@ export default function Header() {
       </Navbar.Collapse>
     </Navbar>
   );
-}
+};
+
+export default Header;

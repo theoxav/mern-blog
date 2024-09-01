@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
-import InputField from "../UI/Forms/InputField";
 import {
   signInStart,
   signInSuccess,
   signInFailure,
 } from "../../redux/user/userSlice";
 import ErrorAlert from "../UI/Alert/ErrorAlert";
-import OAuth from "../UI/Auth/OAuth";
+import InputField from "../UI/Inputs/InputField";
+import OAuth from "./components/OAuth";
 
-const SigninForm = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
 
@@ -89,4 +89,4 @@ const SigninForm = () => {
   );
 };
 
-export default SigninForm;
+export default Login;

@@ -2,15 +2,15 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import PrivateRoute from "./components/US/PrivateRoute";
-import Loading from "./components/UI/Loading";
+import Loading from "./components/UI/Loaders/Loading";
 
-const HomePage = lazy(() => import("./pages/Home"));
-const AboutPage = lazy(() => import("./pages/About"));
-const SigninPage = lazy(() => import("./pages/Signin"));
-const SignupPage = lazy(() => import("./pages/Signup"));
-const ProjectsPage = lazy(() => import("./pages/Projects"));
-const DashboardPage = lazy(() => import("./pages/Dashboard"));
-const NotFoundPage = lazy(() => import("./pages/NotFound"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const SigninPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/RegisterPage"));
+const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 export const router = createBrowserRouter([
   {

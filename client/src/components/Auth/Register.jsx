@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, Spinner, Alert } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import InputField from "../UI/Forms/InputField";
-import OAuth from "../UI/Auth/OAuth";
+import InputField from "../UI/Inputs/InputField";
+import OAuth from "./components/OAuth";
 
-const SignupForm = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
@@ -94,4 +94,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default Register;

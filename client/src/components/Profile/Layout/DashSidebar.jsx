@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 
-export default function DashSidebar() {
+const DashSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
 
@@ -35,4 +35,6 @@ export default function DashSidebar() {
       </Sidebar.Items>
     </Sidebar>
   );
-}
+};
+
+export default DashSidebar;
