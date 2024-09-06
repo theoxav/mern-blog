@@ -1,4 +1,4 @@
-const ErrorHandler = (err, req, res, next) => {
+const errorMiddleware = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
 
@@ -10,4 +10,4 @@ const ErrorHandler = (err, req, res, next) => {
   });
 };
 
-export default ErrorHandler;
+export default errorMiddleware;

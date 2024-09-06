@@ -11,3 +11,14 @@ export const generateToken = (user, res) => {
     })
     .json(rest);
 };
+
+export const getToken = (req) => {
+  return req.cookies.access_token;
+};
+
+export const verifyToken = (token) => {
+  return jwt.verify(token, config.JWT_SECRET, (err, user) => {
+    if (err) return false;
+    return user;
+  });
+};
