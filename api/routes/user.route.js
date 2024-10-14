@@ -14,12 +14,12 @@ const router = express.Router();
 
 router.get("/", getUsers);
 router.put(
-  "/:userId",
+  "/update/:userId",
   isAuthenticated,
   validateUserUpdate,
   isUserAuthorized,
   updateUser
 );
-router.delete("/:userId", isAuthenticated, isUserAuthorized, deleteUser);
+router.delete("/delete/:userId", isAuthenticated, isUserAuthorized, deleteUser);
 
 export default router;
