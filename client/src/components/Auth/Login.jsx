@@ -10,6 +10,7 @@ import {
 import ErrorAlert from "../UI/Alert/ErrorAlert";
 import InputField from "../UI/Inputs/InputField";
 import OAuth from "./components/OAuth";
+import AuthService from "../../services/api/auth/auth.api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,24 +25,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.email || !formData.password) {
       dispatch(signInFailure("Please fill in all fields"));
       return;
     }
+
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        dispatch(signInFailure(data.message));
-        return;
-      }
+      const data = await AuthService.signin(formData);
       dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
