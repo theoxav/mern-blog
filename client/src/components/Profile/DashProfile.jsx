@@ -21,6 +21,8 @@ import {
   deleteUserFailure,
 } from "../../redux/user/userSlice";
 import { useLogout } from "../../hooks/auth/useLogout";
+import { Link } from "react-router-dom";
+import Loading from "../UI/Loaders/Loading";
 
 export default function DashProfile() {
   const dispatch = useDispatch();
@@ -161,14 +163,14 @@ export default function DashProfile() {
           hidden
         />
         <div
-          className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
+          className="relative w-32 h-32 self-center cursor-pointer shadow-xl overflow-hidden rounded-full"
           onClick={() => filePickerRef.current.click()}
         >
           {imageFileUploadProgress && (
             <CircularProgressbar
               value={imageFileUploadProgress || 0}
               text={`${imageFileUploadProgress}%`}
-              strokeWidth={5}
+              strokeWidth={4}
               styles={{
                 root: {
                   width: "100%",
@@ -188,7 +190,7 @@ export default function DashProfile() {
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-2 border-[black] dark:border-white ${
+            className={`rounded-full w-full h-full object-cover border-2 border-[black] dark:border-white shadow-xl ${
               imageFileUploadProgress &&
               imageFileUploadProgress < 100 &&
               "opacity-60"
@@ -218,9 +220,25 @@ export default function DashProfile() {
           placeholder="password"
           onChange={handleChange}
         />
-        <Button type="submit" gradientDuoTone="purpleToBlue" outline>
-          Update
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToBlue"
+          outline
+          disabled={loading || imageFileUploading}
+        >
+          {loading ? <Loading /> : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to="create-post">
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              className="w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModal(true)} className="cursor-pointer">

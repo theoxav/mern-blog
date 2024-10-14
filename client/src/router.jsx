@@ -6,11 +6,11 @@ import Loading from "./components/UI/Loaders/Loading";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const SigninPage = lazy(() => import("./pages/LoginPage"));
-const SignupPage = lazy(() => import("./pages/RegisterPage"));
+const SigninPage = lazy(() => import("./pages/auth/LoginPage"));
+const SignupPage = lazy(() => import("./pages/auth/RegisterPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+const DashboardPage = lazy(() => import("./pages/profile/DashboardPage"));
+const NotFoundPage = lazy(() => import("./pages/not-found/NotFoundPage"));
 
 export const router = createBrowserRouter([
   {
