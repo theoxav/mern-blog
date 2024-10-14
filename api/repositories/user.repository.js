@@ -45,6 +45,15 @@ class UserRepository {
       throw e;
     }
   }
+
+  static async deleteUserById(userId) {
+    try {
+      const deletedUser = await User.findByIdAndDelete(userId);
+      return deletedUser;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default UserRepository;

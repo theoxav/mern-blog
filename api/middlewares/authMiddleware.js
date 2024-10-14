@@ -17,3 +17,12 @@ export const isAuthenticated = async (req, res, next) => {
   req.user = user;
   next();
 };
+
+export const isUserAuthorized = (req, res, next) => {
+  const { userId } = req.params;
+
+  if (req.user.id !== userId) {
+    return next(errorHandler(403, "You are not allowed to update this user"));
+  }
+  next();
+};
