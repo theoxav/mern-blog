@@ -3,6 +3,7 @@ import { Button, Spinner, Alert } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../UI/Inputs/InputField";
 import OAuth from "./components/OAuth";
+import AuthService from "../../services/api/auth/auth.api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,25 +17,16 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.username || !formData.email || !formData.password) {
       setErrorMessage("Please fill in all fields");
       return;
     }
+
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setErrorMessage(data.message);
-        return;
-      }
+      await AuthService.register(formData);
       navigate("/sign-in");
     } catch (error) {
       setErrorMessage(error.message);
