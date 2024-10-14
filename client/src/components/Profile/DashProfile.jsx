@@ -20,10 +20,12 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
 } from "../../redux/user/userSlice";
+import { useLogout } from "../../hooks/auth/useLogout";
 
 export default function DashProfile() {
   const dispatch = useDispatch();
   const { currentUser, error, loading } = useSelector((state) => state.user);
+  const { handleSignout } = useLogout();
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -224,7 +226,9 @@ export default function DashProfile() {
         <span onClick={() => setShowModal(true)} className="cursor-pointer">
           Delete Account
         </span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span onClick={handleSignout} className="cursor-pointer">
+          Sign Out
+        </span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">

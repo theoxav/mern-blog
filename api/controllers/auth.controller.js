@@ -44,6 +44,17 @@ export const signin = async (req, res, next) => {
   }
 };
 
+export const signout = (req, res, next) => {
+  try {
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json("You are logged out successfully");
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const google = async (req, res, next) => {
   const { email, name, googlePhotoUrl } = req.body;
 

@@ -2,10 +2,12 @@ import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
+import { useLogout } from "../../../hooks/auth/useLogout";
 
 const DashSidebar = () => {
   const location = useLocation();
   const [tab, setTab] = useState("");
+  const { handleSignout } = useLogout();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -28,7 +30,11 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>
           </Link>
-          <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer">
+          <Sidebar.Item
+            onClick={handleSignout}
+            icon={HiArrowSmRight}
+            className="cursor-pointer"
+          >
             Sign Out
           </Sidebar.Item>
         </Sidebar.ItemGroup>
