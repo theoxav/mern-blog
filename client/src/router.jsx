@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import PrivateRoute from "./components/US/PrivateRoute";
+import AdminRoute from "./components/US/AdminRoute";
 import Loading from "./components/UI/Loaders/Loading";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -10,6 +11,7 @@ const SigninPage = lazy(() => import("./pages/auth/LoginPage"));
 const SignupPage = lazy(() => import("./pages/auth/RegisterPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const DashboardPage = lazy(() => import("./pages/profile/DashboardPage"));
+const CreatePostPage = lazy(() => import("./pages/admin/CreatePostPage"));
 const NotFoundPage = lazy(() => import("./pages/not-found/NotFoundPage"));
 
 export const router = createBrowserRouter([
@@ -64,6 +66,16 @@ export const router = createBrowserRouter([
             <PrivateRoute>
               <DashboardPage />
             </PrivateRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: "/create-post",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <AdminRoute>
+              <CreatePostPage />
+            </AdminRoute>
           </Suspense>
         ),
       },
