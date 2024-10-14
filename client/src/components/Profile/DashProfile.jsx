@@ -113,6 +113,7 @@ export default function DashProfile() {
       }
       dispatch(updateSuccess(data));
       setUpdateUserSuccess("User profile updated successfully");
+      setImageFileUploadProgress(null);
     } catch (error) {
       dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
@@ -160,7 +161,7 @@ export default function DashProfile() {
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="user"
-            className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${
+            className={`rounded-full w-full h-full object-cover border-2 border-[black] dark:border-white ${
               imageFileUploadProgress &&
               imageFileUploadProgress < 100 &&
               "opacity-60"
