@@ -17,7 +17,9 @@ export default function CreatePostForm() {
     ],
   };
 
-  const { quill, quillRef } = useQuill({ modules });
+  const placeholder = "Write something...";
+
+  const { quill, quillRef } = useQuill({ modules, placeholder });
 
   return (
     <form className="flex flex-col gap-4 h-screen">
