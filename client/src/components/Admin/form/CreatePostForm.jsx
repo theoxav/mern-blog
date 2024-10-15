@@ -1,6 +1,18 @@
-import { Button, FileInput, Select, TextInput } from "flowbite-react";
+import { app } from "../../../firebase";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+
+import { useState } from "react";
+
+import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function CreatePostForm() {
   const modules = {
@@ -20,6 +32,53 @@ export default function CreatePostForm() {
   const placeholder = "Write something...";
 
   const { quill, quillRef } = useQuill({ modules, placeholder });
+  const [formData, setFormData] = useState({});
+  const [file, setFile] = useState(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState(null);
+  const [imageUploadError, setImageUploadError] = useState(null);
+
+  const handleUploadImage = async () => {
+    try {
+      if (!file) {
+        setImageUploadError("Please select an image");
+        return;
+      }
+      setImageUploadError(null);
+
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + "-" + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          setImageUploadProgress(progress.toFixed(0));
+        },
+
+        (error) => {
+          setImageUploadError("Image upload failed.");
+          setImageUploadProgress(null);
+          setFile(null);
+        },
+
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageUploadProgress(null);
+            setFile(null);
+            setFormData({ ...formData, image: downloadURL });
+          });
+        }
+      );
+    } catch (error) {
+      setImageUploadError(error.message);
+      setImageUploadProgress(null);
+      console.log(error);
+    }
+  };
 
   return (
     <form className="flex flex-col gap-4 h-screen">
@@ -39,20 +98,54 @@ export default function CreatePostForm() {
       </div>
 
       <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
-        <FileInput type="file" accept="image/*" />
-        <Button type="button" gradientDuoTone="purpleToBlue" size="sm" outline>
-          Upload Image
+        <FileInput
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <Button
+          type="button"
+          gradientDuoTone="purpleToBlue"
+          size="sm"
+          outline
+          onClick={handleUploadImage}
+          disabled={imageUploadProgress}
+        >
+          {imageUploadProgress ? (
+            <div className="w-16 h-16">
+              <CircularProgressbar
+                value={imageUploadProgress}
+                text={`${imageUploadProgress || 0}%`}
+              />
+            </div>
+          ) : (
+            "Upload Image"
+          )}
         </Button>
       </div>
 
-      <div style={{ width: "100%", height: 300, marginBottom: "16px" }}>
-        <div ref={quillRef} />
+      {imageUploadError && (
+        <Alert color="failure">
+          <span>{imageUploadError}</span>
+        </Alert>
+      )}
+
+      {formData.image && (
+        <div className="flex justify-center">
+          <img
+            src={formData.image}
+            alt="uploaded image"
+            className="w-full h-72 object-cover"
+          />
+        </div>
+      )}
+
+      <div style={{ height: "300px" }}>
+        <div ref={quillRef} style={{ height: "80%" }} />
       </div>
-      <Button
-        type="submit"
-        gradientDuoTone="purpleToPink"
-        className="mt-12 lg:mt-8"
-      >
+
+      <Button type="submit" gradientDuoTone="purpleToPink">
         Publish
       </Button>
     </form>
