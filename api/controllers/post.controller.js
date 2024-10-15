@@ -24,8 +24,6 @@ export const getPosts = async (req, res, next) => {
 };
 
 export const createPost = async (req, res, next) => {
-  console.log("in the controller");
-
   const slug = req.body.title
     .split(" ")
     .join("-")
@@ -40,6 +38,8 @@ export const createPost = async (req, res, next) => {
 
   try {
     const post = await PostRepository.create(newPost);
+    console.log(post);
+
     res.status(201).json(post);
   } catch (e) {
     next(e);

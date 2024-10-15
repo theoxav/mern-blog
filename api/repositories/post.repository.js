@@ -46,6 +46,7 @@ class PostRepository {
         slug: postData.slug,
         image: postData.image,
         category: postData.category,
+        userId: postData.userId,
       });
 
       return await newPost.save();

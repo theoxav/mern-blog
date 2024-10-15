@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development nodemon index.js"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "seed:users": "node seeds/usersSeeder.js",
+    "seed:posts": "node seeds/postsSeeder.js",
+    "seeds": "npm run seed:users && npm run seed:posts"
   },
   "author": "",
   "license": "ISC",
