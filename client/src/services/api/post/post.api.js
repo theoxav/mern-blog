@@ -21,6 +21,22 @@ class PostService {
       throw new Error(`${error.message}`);
     }
   }
+
+  static async getPosts(userId) {
+    try {
+      const res = await fetch(`/api/posts?userId=${userId}`);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch posts");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching posts: ", error);
+      throw new Error(`${error.message}`);
+    }
+  }
 }
 
 export default PostService;
