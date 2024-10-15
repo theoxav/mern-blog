@@ -1,5 +1,28 @@
 import PostRepository from "../repositories/post.repository.js";
 
+export const getPosts = async (req, res, next) => {
+  try {
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 9;
+    const sortDirection = req.query.order === "asc" ? 1 : -1;
+
+    const { posts, totalPosts, lastMonthPosts } = await PostRepository.getAll(
+      req.query,
+      startIndex,
+      limit,
+      sortDirection
+    );
+
+    res.status(200).json({
+      posts,
+      totalPosts,
+      lastMonthPosts,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const createPost = async (req, res, next) => {
   console.log("in the controller");
 
