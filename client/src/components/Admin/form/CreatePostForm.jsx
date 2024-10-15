@@ -8,13 +8,17 @@ import {
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import PostService from "../../../services/api/post/post.api";
 
 export default function CreatePostForm() {
+  const navigate = useNavigate();
+
   const modules = {
     toolbar: [
       ["bold", "italic", "underline", "strike"],
@@ -36,6 +40,7 @@ export default function CreatePostForm() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [publishError, setPublishError] = useState(null);
 
   const handleUploadImage = async () => {
     try {
@@ -80,16 +85,42 @@ export default function CreatePostForm() {
     }
   };
 
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        const content = quill.root.innerHTML;
+        setFormData((prev) => ({ ...prev, content }));
+      });
+    }
+  }, [quill]);
+
+  const handleSubmit = async (e) => {
+    setPublishError(null);
+    e.preventDefault();
+    try {
+      const data = await PostService.create(formData);
+      navigate(`/post/${data.slug}`);
+    } catch (error) {
+      setPublishError(error.message);
+      console.log(error);
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-4 h-screen">
+    <form className="flex flex-col gap-4 h-screen" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-4 sm:flex-row justify-between">
         <TextInput
           type="text"
           placeholder="Enter a title"
           id="title"
           className="flex-1"
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
-        <Select>
+        <Select
+          onChange={(e) =>
+            setFormData({ ...formData, category: e.target.value })
+          }
+        >
           <option value="uncategorized">Select Category</option>
           <option value="javascript">JavaScript</option>
           <option value="reactjs">React.js</option>
@@ -145,6 +176,11 @@ export default function CreatePostForm() {
         <div ref={quillRef} style={{ height: "80%" }} />
       </div>
 
+      {publishError && (
+        <Alert color="failure">
+          <span>{publishError}</span>
+        </Alert>
+      )}
       <Button type="submit" gradientDuoTone="purpleToPink">
         Publish
       </Button>
