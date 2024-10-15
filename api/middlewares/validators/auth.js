@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { validate } from "./index.js"; // Assurez-vous que le chemin est correct
+import { validate } from "./index.js";
 
 export const validateRegister = async (req, res, next) => {
   const validationRules = [
