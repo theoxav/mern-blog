@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {
   signInStart,
   signInSuccess,
@@ -12,29 +14,29 @@ import InputField from "../UI/Inputs/InputField";
 import OAuth from "./components/OAuth";
 import AuthService from "../../services/api/auth.api";
 
+const schema = yup.object().shape({
+  email: yup.string().email("Email is invalid").required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
+
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({});
-
   const dispatch = useDispatch();
   const { loading, error: errorMessage } = useSelector((state) => state.user);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!formData.email || !formData.password) {
-      dispatch(signInFailure("Please fill in all fields"));
-      return;
-    }
-
+  const onSubmit = async (data) => {
     try {
       dispatch(signInStart());
-      const data = await AuthService.signin(formData);
-      dispatch(signInSuccess(data));
+      const response = await AuthService.signin(data);
+      dispatch(signInSuccess(response));
       navigate("/");
     } catch (error) {
       dispatch(signInFailure(error.message));
@@ -43,21 +45,25 @@ const Login = () => {
 
   return (
     <>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <InputField
           id="email"
           type="email"
           placeholder="name@company.com"
           label="Your email"
-          onChange={handleChange}
+          {...register("email")}
+          error={errors.email?.message}
         />
+
         <InputField
           id="password"
           type="password"
           placeholder="**********"
           label="Your password"
-          onChange={handleChange}
+          {...register("password")}
+          error={errors.password?.message}
         />
+
         <Button gradientDuoTone="purpleToPink" type="submit" disabled={loading}>
           {loading ? (
             <>
@@ -70,12 +76,14 @@ const Login = () => {
         </Button>
         <OAuth />
       </form>
+
       <div className="flex gap-2 text-sm mt-5">
-        <span>Dont have an account?</span>
+        <span>Don't have an account?</span>
         <Link to="/sign-up" className="text-blue-500">
           Sign Up
         </Link>
       </div>
+
       {errorMessage && <ErrorAlert message={errorMessage} />}
     </>
   );
