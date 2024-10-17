@@ -38,6 +38,15 @@ class PostRepository {
     }
   }
 
+  static async getPostById(postId) {
+    try {
+      const post = await Post.findById(postId);
+      return post;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   static async create(postData) {
     try {
       const newPost = new Post({
@@ -50,6 +59,17 @@ class PostRepository {
       });
 
       return await newPost.save();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static async updatePostById(postId, postData) {
+    try {
+      const updatedPost = await Post.findByIdAndUpdate(postId, postData, {
+        new: true,
+      });
+      return updatedPost;
     } catch (e) {
       throw e;
     }

@@ -7,51 +7,73 @@ import {
 } from "firebase/storage";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import PostService from "../../../services/api/post/post.api";
 
-export default function CreatePostForm() {
+export default function PostForm({ post = null }) {
   const navigate = useNavigate();
+  const { quill, quillRef } = useQuill({
+    modules: {
+      toolbar: [
+        ["bold", "italic", "underline", "strike"],
+        [{ align: [] }],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ indent: "-1" }, { indent: "+1" }],
+        [{ size: ["small", false, "large", "huge"] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["link"],
+        [{ color: [] }, { background: [] }],
+        ["clean"],
+      ],
+    },
+    placeholder: "Write something...",
+  });
 
-  const modules = {
-    toolbar: [
-      ["bold", "italic", "underline", "strike"],
-      [{ align: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      [{ size: ["small", false, "large", "huge"] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ["link"],
-      [{ color: [] }, { background: [] }],
-      ["clean"],
-    ],
-  };
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    content: "",
+    image: "",
+  });
 
-  const placeholder = "Write something...";
-
-  const { quill, quillRef } = useQuill({ modules, placeholder });
-  const [formData, setFormData] = useState({});
   const [file, setFile] = useState(null);
-  const [imageUploadProgress, setImageUploadProgress] = useState(null);
-  const [imageUploadError, setImageUploadError] = useState(null);
-  const [publishError, setPublishError] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState({
+    progress: null,
+    error: null,
+    publishError: null,
+  });
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        setFormData((prev) => ({ ...prev, content: quill.root.innerHTML }));
+      });
+    }
+  }, [quill]);
+
+  useEffect(() => {
+    if (post) {
+      setFormData(post);
+      if (quill) {
+        quill.clipboard.dangerouslyPasteHTML(post.content);
+      }
+    }
+  }, [post, quill]);
 
   const handleUploadImage = async () => {
-    try {
-      if (!file) {
-        setImageUploadError("Please select an image");
-        return;
-      }
-      setImageUploadError(null);
+    if (!file) {
+      setUploadStatus((prev) => ({ ...prev, error: "Please select an image" }));
+      return;
+    }
+    setUploadStatus((prev) => ({ ...prev, error: null }));
 
+    try {
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + "-" + file.name;
+      const fileName = `${new Date().getTime()}-${file.name}`;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -60,49 +82,41 @@ export default function CreatePostForm() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          setImageUploadProgress(progress.toFixed(0));
+          setUploadStatus((prev) => ({
+            ...prev,
+            progress: progress.toFixed(0),
+          }));
         },
-
         (error) => {
-          setImageUploadError("Image upload failed.");
-          setImageUploadProgress(null);
+          setUploadStatus({ progress: null, error: "Image upload failed." });
           setFile(null);
         },
-
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setImageUploadProgress(null);
+            setUploadStatus({ progress: null, error: null });
             setFile(null);
-            setFormData({ ...formData, image: downloadURL });
+            setFormData((prev) => ({ ...prev, image: downloadURL }));
           });
         }
       );
     } catch (error) {
-      setImageUploadError(error.message);
-      setImageUploadProgress(null);
-      console.log(error);
+      setUploadStatus({ progress: null, error: error.message });
+      console.error(error);
     }
   };
 
-  useEffect(() => {
-    if (quill) {
-      quill.on("text-change", () => {
-        const content = quill.root.innerHTML;
-        setFormData((prev) => ({ ...prev, content }));
-      });
-    }
-  }, [quill]);
-
   const handleSubmit = async (e) => {
-    setPublishError(null);
     e.preventDefault();
+    setUploadStatus((prev) => ({ ...prev, publishError: null }));
+
     try {
-      const data = await PostService.create(formData);
+      const data = post
+        ? await PostService.update(post._id, formData)
+        : await PostService.create(formData);
       navigate(`/post/${data.slug}`);
     } catch (error) {
-      setPublishError(error.message);
-      console.log(error);
+      setUploadStatus((prev) => ({ ...prev, publishError: error.message }));
+      console.error(error);
     }
   };
 
@@ -114,17 +128,19 @@ export default function CreatePostForm() {
           placeholder="Enter a title"
           id="title"
           className="flex-1"
+          value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <Select
           onChange={(e) =>
             setFormData({ ...formData, category: e.target.value })
           }
+          value={formData.category}
         >
           <option value="uncategorized">Select Category</option>
           <option value="javascript">JavaScript</option>
-          <option value="reactjs">React.js</option>
-          <option value="nextjs">Next.js</option>
+          <option value="react.js">React.js</option>
+          <option value="next.js">Next.js</option>
         </Select>
       </div>
 
@@ -134,20 +150,19 @@ export default function CreatePostForm() {
           accept="image/*"
           onChange={(e) => setFile(e.target.files[0])}
         />
-
         <Button
           type="button"
           gradientDuoTone="purpleToBlue"
           size="sm"
           outline
           onClick={handleUploadImage}
-          disabled={imageUploadProgress}
+          disabled={uploadStatus.progress !== null}
         >
-          {imageUploadProgress ? (
+          {uploadStatus.progress ? (
             <div className="w-16 h-16">
               <CircularProgressbar
-                value={imageUploadProgress}
-                text={`${imageUploadProgress || 0}%`}
+                value={uploadStatus.progress}
+                text={`${uploadStatus.progress || 0}%`}
               />
             </div>
           ) : (
@@ -156,9 +171,9 @@ export default function CreatePostForm() {
         </Button>
       </div>
 
-      {imageUploadError && (
+      {uploadStatus.error && (
         <Alert color="failure">
-          <span>{imageUploadError}</span>
+          <span>{uploadStatus.error}</span>
         </Alert>
       )}
 
@@ -166,7 +181,7 @@ export default function CreatePostForm() {
         <div className="flex justify-center">
           <img
             src={formData.image}
-            alt="uploaded image"
+            alt="uploaded"
             className="w-full h-72 object-cover"
           />
         </div>
@@ -176,13 +191,13 @@ export default function CreatePostForm() {
         <div ref={quillRef} style={{ height: "80%" }} />
       </div>
 
-      {publishError && (
+      {uploadStatus.publishError && (
         <Alert color="failure">
-          <span>{publishError}</span>
+          <span>{uploadStatus.publishError}</span>
         </Alert>
       )}
       <Button type="submit" gradientDuoTone="purpleToPink">
-        Publish
+        {post ? "Edit" : "Publish"}
       </Button>
     </form>
   );

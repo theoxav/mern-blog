@@ -45,6 +45,27 @@ export const createPost = async (req, res, next) => {
   }
 };
 
+export const getPostById = async (req, res, next) => {
+  try {
+    const post = await PostRepository.getPostById(req.params.id);
+    res.status(200).json(post);
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const updatePost = async (req, res, next) => {
+  try {
+    const updatedPost = await PostRepository.updatePostById(
+      req.params.id,
+      req.body
+    );
+    res.status(200).json(updatedPost);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const deletePost = async (req, res, next) => {
   try {
     await PostRepository.deletePostById(req.params.id);

@@ -1,4 +1,39 @@
 class PostService {
+  static async getPosts(userId, startIndex = 0) {
+    try {
+      const res = await fetch(
+        `/api/posts?userId=${userId}&startIndex=${startIndex}`
+      );
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch posts");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching posts: ", error);
+      throw new Error(`${error.message}`);
+    }
+  }
+
+  static async getPostById(postId) {
+    try {
+      const res = await fetch(`/api/posts/${postId}`);
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to fetch post");
+      }
+
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching post: ", error);
+      throw new Error(`${error.message}`);
+    }
+  }
+
   static async create(formData) {
     try {
       const res = await fetch("/api/posts/create", {
@@ -22,20 +57,25 @@ class PostService {
     }
   }
 
-  static async getPosts(userId, startIndex = 0) {
+  static async update(postId, formData) {
     try {
-      const res = await fetch(
-        `/api/posts?userId=${userId}&startIndex=${startIndex}`
-      );
+      const res = await fetch(`/api/posts/${postId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to fetch posts");
+        throw new Error(data.message || "Failed to update post");
       }
 
       return data;
     } catch (error) {
-      console.error("Error fetching posts: ", error);
+      console.error("Post update error: ", error);
       throw new Error(`${error.message}`);
     }
   }
