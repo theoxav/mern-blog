@@ -1,7 +1,7 @@
 import { useLoaderData, useLocation } from "react-router-dom";
 import PostForm from "../../components/Admin/form/PostForm";
 
-export default function PostPage() {
+export default function AdminPostPage() {
   const location = useLocation();
   const post = useLoaderData();
 

@@ -12,85 +12,67 @@ const SigninPage = lazy(() => import("./pages/auth/LoginPage"));
 const SignupPage = lazy(() => import("./pages/auth/RegisterPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const DashboardPage = lazy(() => import("./pages/dashboard/DashboardPage"));
-const PostPage = lazy(() => import("./pages/admin/PostPage"));
+const AdminPostPage = lazy(() => import("./pages/admin/AdminPostPage"));
+const PostPage = lazy(() => import("./pages/posts/PostPage"));
 const NotFoundPage = lazy(() => import("./pages/not-found/NotFoundPage"));
+
+const adminRoutes = [
+  {
+    path: "/create-post",
+    element: <AdminPostPage />,
+  },
+  {
+    path: "/update-post/:postId",
+    element: <AdminPostPage />,
+    loader: postByIdLoader,
+  },
+];
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <App />
+      </Suspense>
+    ),
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <HomePage />
-          </Suspense>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/about",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <AboutPage />
-          </Suspense>
-        ),
+        element: <AboutPage />,
       },
       {
         path: "/sign-in",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <SigninPage />
-          </Suspense>
-        ),
+        element: <SigninPage />,
       },
       {
         path: "/sign-up",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <SignupPage />
-          </Suspense>
-        ),
+        element: <SignupPage />,
+      },
+      {
+        path: "/posts/:postSlug",
+        element: <PostPage />,
       },
       {
         path: "/projects",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <ProjectsPage />
-          </Suspense>
-        ),
+        element: <ProjectsPage />,
       },
       {
         path: "/dashboard",
         element: (
-          <Suspense fallback={<Loading />}>
-            <PrivateRoute>
-              <DashboardPage />
-            </PrivateRoute>
-          </Suspense>
+          <PrivateRoute>
+            <DashboardPage />
+          </PrivateRoute>
         ),
       },
-      {
-        path: "/create-post",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <AdminRoute>
-              <PostPage />
-            </AdminRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/update-post/:postId",
-        element: (
-          <Suspense fallback={<Loading />}>
-            <AdminRoute>
-              <PostPage />
-            </AdminRoute>
-          </Suspense>
-        ),
-        loader: postByIdLoader,
-      },
+      ...adminRoutes.map((route) => ({
+        path: route.path,
+        element: <AdminRoute>{route.element}</AdminRoute>,
+      })),
       {
         path: "*",
         element: <NotFoundPage />,
