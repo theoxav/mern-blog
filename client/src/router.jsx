@@ -16,18 +16,6 @@ const AdminPostPage = lazy(() => import("./pages/admin/AdminPostPage"));
 const PostPage = lazy(() => import("./pages/posts/PostPage"));
 const NotFoundPage = lazy(() => import("./pages/not-found/NotFoundPage"));
 
-const adminRoutes = [
-  {
-    path: "/create-post",
-    element: <AdminPostPage />,
-  },
-  {
-    path: "/update-post/:postId",
-    element: <AdminPostPage />,
-    loader: postByIdLoader,
-  },
-];
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -70,10 +58,23 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      ...adminRoutes.map((route) => ({
-        path: route.path,
-        element: <AdminRoute>{route.element}</AdminRoute>,
-      })),
+      {
+        path: "/create-post",
+        element: (
+          <AdminRoute>
+            <AdminPostPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/update-post/:postId",
+        element: (
+          <AdminRoute>
+            <AdminPostPage />
+          </AdminRoute>
+        ),
+        loader: postByIdLoader,
+      },
       {
         path: "*",
         element: <NotFoundPage />,

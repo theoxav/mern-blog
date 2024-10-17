@@ -13,6 +13,7 @@ import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import PostService from "../../../services/api/post.api";
+import { filterEmptyFields } from "../../../utils/filteredData";
 
 export default function PostForm({ post = null }) {
   const navigate = useNavigate();
@@ -37,9 +38,9 @@ export default function PostForm({ post = null }) {
 
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
-    content: "",
     image: "",
+    content: "",
+    category: "",
   });
 
   const [file, setFile] = useState(null);
@@ -60,6 +61,7 @@ export default function PostForm({ post = null }) {
   useEffect(() => {
     if (post) {
       setFormData(post);
+
       if (quill) {
         quill.clipboard.dangerouslyPasteHTML(post.content);
       }
@@ -113,9 +115,9 @@ export default function PostForm({ post = null }) {
 
     try {
       if (location.pathname.includes("update-post")) {
-        await PostService.update(post._id, formData);
+        await PostService.update(post._id, filterEmptyFields(formData));
       } else {
-        await PostService.create(formData);
+        await PostService.create(filterEmptyFields(formData));
       }
       navigate("/dashboard?tab=posts");
     } catch (error) {

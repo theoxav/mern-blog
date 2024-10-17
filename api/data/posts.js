@@ -5,7 +5,7 @@ const posts = (adminUserId) => [
       "Closures are a fundamental concept in JavaScript, allowing functions to access variables from an outer scope even after the outer function has closed. In this article, we'll dive deep into closures and how to effectively use them in your code.",
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "javascript",
+    category: "uncategorized",
     slug: "understanding-closures-javascript",
     userId: adminUserId,
   },
