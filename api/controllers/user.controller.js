@@ -1,10 +1,13 @@
 import UserRepository from "../repositories/user.repository.js";
 import { hashPassword } from "../utils/auth.js";
 
-export const getUsers = (req, res, next) => {
-  res.json({
-    message: "Api is working !",
-  });
+export const getUsers = async (req, res, next) => {
+  try {
+    const users = await UserRepository.getUsers(req.query);
+    res.status(200).json(users);
+  } catch (e) {
+    next(e);
+  }
 };
 
 export const updateUser = async (req, res, next) => {

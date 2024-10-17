@@ -5,6 +5,7 @@ import {
   updateUser,
 } from "../controllers/user.controller.js";
 import {
+  isAdmin,
   isAuthenticated,
   isUserAuthorized,
 } from "../middlewares/authMiddleware.js";
@@ -12,7 +13,7 @@ import { validateUserUpdate } from "../middlewares/validators/user.js";
 
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get("/", isAuthenticated, isAdmin, getUsers);
 router.put(
   "/update/:userId",
   isAuthenticated,
