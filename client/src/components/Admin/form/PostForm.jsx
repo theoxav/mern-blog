@@ -8,7 +8,7 @@ import {
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -16,6 +16,8 @@ import PostService from "../../../services/api/post/post.api";
 
 export default function PostForm({ post = null }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { quill, quillRef } = useQuill({
     modules: {
       toolbar: [
@@ -110,10 +112,12 @@ export default function PostForm({ post = null }) {
     setUploadStatus((prev) => ({ ...prev, publishError: null }));
 
     try {
-      const data = post
-        ? await PostService.update(post._id, formData)
-        : await PostService.create(formData);
-      navigate(`/post/${data.slug}`);
+      if (location.pathname.includes("update-post")) {
+        await PostService.update(post._id, formData);
+      } else {
+        await PostService.create(formData);
+      }
+      navigate("/dashboard?tab=posts");
     } catch (error) {
       setUploadStatus((prev) => ({ ...prev, publishError: error.message }));
       console.error(error);
