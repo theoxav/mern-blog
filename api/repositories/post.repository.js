@@ -47,6 +47,15 @@ class PostRepository {
     }
   }
 
+  static async getPostBySlug(slug) {
+    try {
+      const post = await Post.findOne({ slug });
+      return post;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   static async create(postData) {
     try {
       const newPost = new Post({

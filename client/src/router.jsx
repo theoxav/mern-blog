@@ -4,7 +4,7 @@ import App from "./App";
 import PrivateRoute from "./components/US/PrivateRoute";
 import AdminRoute from "./components/US/AdminRoute";
 import Loading from "./components/UI/Loaders/Loading";
-import { postByIdLoader } from "./loaders/posts.loader";
+import { postByIdLoader, postBySlugLoader } from "./loaders/posts.loader";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -56,6 +56,7 @@ export const router = createBrowserRouter([
       {
         path: "/posts/:postSlug",
         element: <PostPage />,
+        loader: postBySlugLoader,
       },
       {
         path: "/projects",

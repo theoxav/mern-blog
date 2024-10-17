@@ -34,6 +34,24 @@ class PostService {
     }
   }
 
+  static async getPostBySlug(postSlug) {
+    try {
+      const res = await fetch(`/api/posts/slug/${postSlug}`);
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to fetch post");
+      }
+
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching post: ", error);
+      throw new Error(`${error.message}`);
+    }
+  }
+
   static async create(formData) {
     try {
       const res = await fetch("/api/posts/create", {

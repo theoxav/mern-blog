@@ -54,6 +54,15 @@ export const getPostById = async (req, res, next) => {
   }
 };
 
+export const getPostBySlug = async (req, res, next) => {
+  try {
+    const post = await PostRepository.getPostBySlug(req.params.slug);
+    res.status(200).json(post);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const updatePost = async (req, res, next) => {
   try {
     const updatedPost = await PostRepository.updatePostById(
