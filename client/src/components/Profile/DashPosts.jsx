@@ -3,13 +3,16 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import PostService from "../../services/api/post/post.api";
 import { Table } from "flowbite-react";
+import UIModal from "../UI/Modal/Modal";
 
 export default function DashPosts() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
 
   const [userPosts, setUserPosts] = useState([]);
+  const [postId, setPostId] = useState(null);
   const [showMore, setShowMore] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     if (!currentUser || !currentUser.isAdmin) {
       navigate("/dashboard?tab=profile");
@@ -44,6 +47,18 @@ export default function DashPosts() {
       }
     } catch (error) {
       console.error("Failed to fetch posts: ", error);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    setShowModal(false);
+    try {
+      await PostService.deletePost(postId);
+      setUserPosts((prevPosts) =>
+        prevPosts.filter((post) => post._id !== postId)
+      );
+    } catch (error) {
+      console.error("Failed to delete post: ", error);
     }
   };
 
@@ -87,7 +102,13 @@ export default function DashPosts() {
                   </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
                   <Table.Cell>
-                    <span className=" font-medium text-red-500 hover:underline cursor-pointer">
+                    <span
+                      className=" font-medium text-red-500 hover:underline cursor-pointer"
+                      onClick={() => {
+                        setShowModal(true);
+                        setPostId(post._id);
+                      }}
+                    >
                       Delete
                     </span>
                   </Table.Cell>
@@ -115,6 +136,12 @@ export default function DashPosts() {
       ) : (
         <p>No posts yet</p>
       )}
+      <UIModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalQuestion={`Are you sure you want to delete this post?`}
+        handleConfirmModal={handleDeletePost}
+      />
     </div>
   );
 }

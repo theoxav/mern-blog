@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, TextInput } from "flowbite-react";
+import { Alert, Button, TextInput } from "flowbite-react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 import { useEffect, useRef, useState } from "react";
@@ -23,6 +23,8 @@ import {
 import { useLogout } from "../../hooks/auth/useLogout";
 import { Link } from "react-router-dom";
 import Loading from "../UI/Loaders/Loading";
+import Modal from "../UI/Modal/Modal";
+import UIModal from "../UI/Modal/Modal";
 
 export default function DashProfile() {
   const dispatch = useDispatch();
@@ -263,30 +265,12 @@ export default function DashProfile() {
           {error}
         </Alert>
       )}
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <AiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete your account?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeleteUser}>
-                Yes, I 'm sure
-              </Button>
-              <Button color="gray" onClick={() => setShowModal(false)}>
-                No, cancel
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <UIModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalQuestion={`Are you sure you want to delete your account?`}
+        handleConfirmModal={handleDeleteUser}
+      />
     </div>
   );
 }

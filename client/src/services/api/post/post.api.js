@@ -39,6 +39,25 @@ class PostService {
       throw new Error(`${error.message}`);
     }
   }
+
+  static async deletePost(postId) {
+    try {
+      const res = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to delete post");
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error deleting post: ", error);
+      throw new Error(`${error.message}`);
+    }
+  }
 }
 
 export default PostService;

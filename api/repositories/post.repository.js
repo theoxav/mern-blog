@@ -54,6 +54,15 @@ class PostRepository {
       throw e;
     }
   }
+
+  static async deletePostById(postId) {
+    try {
+      const deletedPost = await Post.findByIdAndDelete(postId);
+      return deletedPost;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default PostRepository;
