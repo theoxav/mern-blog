@@ -3,7 +3,7 @@ import { Button, Spinner, Alert } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../UI/Inputs/InputField";
 import OAuth from "./components/OAuth";
-import AuthService from "../../services/api/auth/auth.api";
+import AuthService from "../../services/api/auth.api";
 
 const Register = () => {
   const navigate = useNavigate();

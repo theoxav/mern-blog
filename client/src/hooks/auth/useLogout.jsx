@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import AuthService from "../../services/api/auth/auth.api";
+import AuthService from "../../services/api/auth.api";
 import { signoutFailure, signoutSuccess } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 

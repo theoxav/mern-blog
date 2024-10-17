@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import PostService from "../../services/api/post/post.api";
+import PostService from "../../../services/api/post.api";
 import { Table } from "flowbite-react";
-import UIModal from "../UI/Modal/Modal";
+import UIModal from "../../UI/Modal/Modal";
 
 export default function DashPosts() {
   const currentUser = useSelector((state) => state.user.currentUser);

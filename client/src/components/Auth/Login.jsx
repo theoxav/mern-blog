@@ -10,7 +10,7 @@ import {
 import ErrorAlert from "../UI/Alert/ErrorAlert";
 import InputField from "../UI/Inputs/InputField";
 import OAuth from "./components/OAuth";
-import AuthService from "../../services/api/auth/auth.api";
+import AuthService from "../../services/api/auth.api";
 
 const Login = () => {
   const navigate = useNavigate();

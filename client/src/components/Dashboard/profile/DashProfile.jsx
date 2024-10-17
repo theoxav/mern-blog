@@ -3,7 +3,7 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { app } from "../../firebase";
+import { app } from "../../../firebase";
 import {
   getDownloadURL,
   getStorage,
@@ -19,12 +19,12 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
-} from "../../redux/user/userSlice";
-import { useLogout } from "../../hooks/auth/useLogout";
+} from "../../../redux/user/userSlice";
+import { useLogout } from "../../../hooks/auth/useLogout";
 import { Link } from "react-router-dom";
-import Loading from "../UI/Loaders/Loading";
-import Modal from "../UI/Modal/Modal";
-import UIModal from "../UI/Modal/Modal";
+import Loading from "../../UI/Loaders/Loading";
+import Modal from "../../UI/Modal/Modal";
+import UIModal from "../../UI/Modal/Modal";
 
 export default function DashProfile() {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const SigninPage = lazy(() => import("./pages/auth/LoginPage"));
 const SignupPage = lazy(() => import("./pages/auth/RegisterPage"));
 const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
-const DashboardPage = lazy(() => import("./pages/profile/DashboardPage"));
+const DashboardPage = lazy(() => import("./pages/dashboard/DashboardPage"));
 const PostPage = lazy(() => import("./pages/admin/PostPage"));
 const NotFoundPage = lazy(() => import("./pages/not-found/NotFoundPage"));
 

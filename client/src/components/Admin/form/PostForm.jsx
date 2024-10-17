@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import PostService from "../../../services/api/post/post.api";
+import PostService from "../../../services/api/post.api";
 
 export default function PostForm({ post = null }) {
   const navigate = useNavigate();

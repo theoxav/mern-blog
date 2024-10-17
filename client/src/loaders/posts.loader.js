@@ -1,4 +1,4 @@
-import PostService from "../services/api/post/post.api";
+import PostService from "../services/api/post.api";
 
 export async function postByIdLoader({ params }) {
   const { postId } = params;
