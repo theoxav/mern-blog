@@ -9,6 +9,7 @@ export default function DashPosts() {
   const navigate = useNavigate();
 
   const [userPosts, setUserPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
   useEffect(() => {
     if (!currentUser || !currentUser.isAdmin) {
       navigate("/dashboard?tab=profile");
@@ -19,6 +20,9 @@ export default function DashPosts() {
       try {
         const data = await PostService.getPosts(currentUser._id);
         setUserPosts(data.posts);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
       } catch (error) {
         console.error("Failed to fetch posts: ", error);
       }
@@ -26,6 +30,22 @@ export default function DashPosts() {
 
     fetchPosts();
   }, [currentUser, navigate]);
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+
+    try {
+      const data = await PostService.getPosts(currentUser._id, startIndex);
+
+      setUserPosts((prevPosts) => [...prevPosts, ...data.posts]);
+
+      if (data.posts.length < 9) {
+        setShowMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch posts: ", error);
+    }
+  };
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -42,8 +62,8 @@ export default function DashPosts() {
                 <span>Edit</span>
               </Table.HeadCell>
             </Table.Head>
-            {userPosts.map((post) => (
-              <Table.Body key={post._id} className="divide-y">
+            {userPosts.map((post, index) => (
+              <Table.Body key={`${post._id}-${index}`} className="divide-y">
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell>
                     {new Date(post.updatedAt).toLocaleDateString()}
@@ -83,6 +103,14 @@ export default function DashPosts() {
               </Table.Body>
             ))}
           </Table>
+          {showMore && (
+            <button
+              onClick={handleShowMore}
+              className="w-full text-teal-500 text-center text-sm py-7"
+            >
+              Show more
+            </button>
+          )}
         </>
       ) : (
         <p>No posts yet</p>

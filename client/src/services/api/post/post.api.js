@@ -22,9 +22,11 @@ class PostService {
     }
   }
 
-  static async getPosts(userId) {
+  static async getPosts(userId, startIndex = 0) {
     try {
-      const res = await fetch(`/api/posts?userId=${userId}`);
+      const res = await fetch(
+        `/api/posts?userId=${userId}&startIndex=${startIndex}`
+      );
       const data = await res.json();
 
       if (!res.ok) {
