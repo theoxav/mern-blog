@@ -1,0 +1,50 @@
+.content p {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.content h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  margin: 1.5rem 0;
+  color: #333;
+}
+
+.content h2 {
+  font-size: 1.4rem;
+  font-family: sans-serif;
+  margin: 1.5rem 0;
+  color: #444;
+}
+
+.content a {
+  color: rgb(73, 149, 199);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.dark .content a {
+  color: red;
+}
+
+.content a:hover {
+  color: rgb(40, 100, 150);
+  text-decoration: underline;
+}
+
+.content pre {
+  background-color: #272822;
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: "Courier New", monospace;
+  color: #f8f8f2;
+  margin: 1rem 0;
+  border: 1px solid #444;
+}
+
+.content code {
+  font-weight: semibold;
+}
