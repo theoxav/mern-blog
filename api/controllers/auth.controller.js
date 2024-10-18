@@ -80,3 +80,12 @@ export const google = async (req, res, next) => {
     next(e);
   }
 };
+
+export const deleteAccount = async (req, res, next) => {
+  try {
+    await UserRepository.deleteUserById(req.user.id);
+    return res.status(200).json("User has been deleted");
+  } catch (e) {
+    next(e);
+  }
+};

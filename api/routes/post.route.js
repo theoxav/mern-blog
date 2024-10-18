@@ -15,7 +15,13 @@ const router = express.Router();
 router.get("/", getPosts);
 router.get("/:id", getPostById);
 router.get("/slug/:slug", getPostBySlug);
-router.post("/create", validateCreatePost, createPost);
+router.post(
+  "/create",
+  isAuthenticated,
+  isAdmin,
+  validateCreatePost,
+  createPost
+);
 router.put("/:id", isAuthenticated, isAdmin, validateCreatePost, updatePost);
 router.delete("/:id", isAuthenticated, isAdmin, deletePost);
 

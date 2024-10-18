@@ -3,10 +3,9 @@ import { Button } from "flowbite-react";
 
 import s from "./PostDetail.module.css";
 import CallToAction from "../US/CallToAction";
+import CommentSection from "../Comments/CommentSection";
 
 export default function PostDetail({ post }) {
-  console.log(post);
-
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen bg-white dark:bg-gray-800">
       <h1
@@ -40,6 +39,7 @@ export default function PostDetail({ post }) {
       <div className="max-w-4xlmx-auto w-full">
         <CallToAction />
       </div>
+      <CommentSection postId={post._id} />
     </main>
   );
 }

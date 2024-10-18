@@ -21,6 +21,6 @@ router.put(
   isUserAuthorized,
   updateUser
 );
-router.delete("/:userId", isAuthenticated, isAdmin, deleteUser);
+router.delete("/delete/:userId", isAuthenticated, isAdmin, deleteUser);
 
 export default router;

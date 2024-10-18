@@ -29,9 +29,7 @@ export const isUserAuthorized = (req, res, next) => {
 
 export const isAdmin = (req, res, next) => {
   if (!req.user || !req.user.isAdmin) {
-    return next(
-      errorHandler(403, "You are not authorized to access this route")
-    );
+    return next(errorHandler(403, "You are not authorized"));
   }
   next();
 };

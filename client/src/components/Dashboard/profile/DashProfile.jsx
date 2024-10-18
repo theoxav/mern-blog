@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../UI/Loaders/Loading";
 import Modal from "../../UI/Modal/Modal";
 import UIModal from "../../UI/Modal/Modal";
+import AuthService from "../../../services/api/auth.api";
 
 export default function DashProfile() {
   const dispatch = useDispatch();
@@ -139,15 +140,9 @@ export default function DashProfile() {
     setShowModal(false);
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/users/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        dispatch(deleteUserFailure(data.message));
-      } else {
-        dispatch(deleteUserSuccess(data));
-      }
+
+      const data = await AuthService.deleteAccount(currentUser._id);
+      dispatch(deleteUserSuccess(data));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
