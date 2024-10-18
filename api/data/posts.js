@@ -15,7 +15,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "JavaScript",
+    category: "Javascript",
     slug: "understanding-closures-javascript",
     userId: adminUserId,
   },
@@ -73,7 +73,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "JavaScript",
+    category: "Javascript",
     slug: "async-await-javascript-guide",
     userId: adminUserId,
   },
@@ -199,7 +199,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React",
+    category: "React.js",
     slug: "introduction-to-react-hooks",
     userId: adminUserId,
   },
@@ -219,7 +219,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "JavaScript",
+    category: "Javascript",
     slug: "understanding-promises",
     userId: adminUserId,
   },
@@ -260,7 +260,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React",
+    category: "React.js",
     slug: "optimizing-react-performance",
     userId: adminUserId,
   },
@@ -323,7 +323,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React",
+    category: "React.js",
     slug: "virtual-dom-in-react",
     userId: adminUserId,
   },
@@ -343,7 +343,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "JavaScript",
+    category: "Javascript",
     slug: "effective-error-handling",
     userId: adminUserId,
   },
@@ -364,7 +364,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "JavaScript",
+    category: "Javascript",
     slug: "asynchronous-javascript",
     userId: adminUserId,
   },
