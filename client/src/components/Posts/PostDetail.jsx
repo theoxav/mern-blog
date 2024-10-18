@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "flowbite-react";
 
 import s from "./PostDetail.module.css";
+import CallToAction from "../US/CallToAction";
 
 export default function PostDetail({ post }) {
   console.log(post);
@@ -36,6 +37,9 @@ export default function PostDetail({ post }) {
         className={`p-3 mx-auto w-full ${s.content}`}
         dangerouslySetInnerHTML={{ __html: post.content }}
       ></div>
+      <div className="max-w-4xlmx-auto w-full">
+        <CallToAction />
+      </div>
     </main>
   );
 }
