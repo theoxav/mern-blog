@@ -4,12 +4,16 @@ import CommentForm from "./CommentForm";
 import CommentService from "../../services/api/comment.api";
 import { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
+import UIModal from "../UI/Modal/Modal";
+
 export default function CommentSection({ postId }) {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
   const [comments, setComments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCommentId, setSelectedCommentId] = useState(null); // Stocke l'ID du commentaire sélectionné pour suppression
 
   const handleSubmit = async () => {
     setCommentError(null);
@@ -32,7 +36,6 @@ export default function CommentSection({ postId }) {
     const getComments = async () => {
       try {
         const data = await CommentService.getAll(postId);
-
         setComments(data);
       } catch (e) {
         console.error("Failed to get comments: ", e);
@@ -75,6 +78,23 @@ export default function CommentSection({ postId }) {
     } catch (e) {
       console.error("Failed to edit comment: ", e);
     }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await CommentService.deleteComment(selectedCommentId);
+      setComments(
+        comments.filter((comment) => comment._id !== selectedCommentId)
+      );
+      setShowModal(false);
+    } catch (e) {
+      console.error("Failed to delete comment: ", e);
+    }
+  };
+
+  const handleOpenDeleteModal = (commentId) => {
+    setSelectedCommentId(commentId);
+    setShowModal(true);
   };
 
   return (
@@ -127,10 +147,18 @@ export default function CommentSection({ postId }) {
               comment={comment}
               onLike={handleLike}
               onEdit={handleEdit}
+              onDelete={() => handleOpenDeleteModal(comment._id)}
             />
           ))}
         </>
       )}
+
+      <UIModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        modalQuestion={`Are you sure you want to delete this comment?`}
+        handleConfirmModal={handleDelete}
+      />
     </div>
   );
 }

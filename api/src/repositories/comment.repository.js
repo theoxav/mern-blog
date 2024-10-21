@@ -13,6 +13,14 @@ class CommentRepository {
     const comment = new Comment({ content, postId, userId });
     return comment.save();
   }
+
+  static async updateCommentById(commentId, content) {
+    return Comment.findByIdAndUpdate(commentId, { content }, { new: true });
+  }
+
+  static async deleteCommentById(commentId) {
+    return Comment.findByIdAndDelete(commentId);
+  }
 }
 
 export default CommentRepository;

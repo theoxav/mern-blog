@@ -19,6 +19,13 @@ class CommentService {
     );
   }
 
+  static deleteComment(commentId) {
+    return ApiService.request(
+      `${this.BASE_URL}/deleteComment/${commentId}`,
+      "DELETE"
+    );
+  }
+
   static likeComment(commentId) {
     return ApiService.request(
       `${this.BASE_URL}/likeComment/${commentId}`,
