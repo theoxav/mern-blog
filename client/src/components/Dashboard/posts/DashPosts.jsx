@@ -21,7 +21,7 @@ export default function DashPosts() {
 
     const fetchPosts = async () => {
       try {
-        const data = await PostService.getPosts(currentUser._id);
+        const data = await PostService.getPosts({ userId: currentUser._id });
         setUserPosts(data.posts);
         if (data.posts.length < 9) {
           setShowMore(false);

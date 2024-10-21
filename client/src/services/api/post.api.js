@@ -3,10 +3,20 @@ import ApiService from "./api";
 class PostService {
   static BASE_URL = "/api/posts";
 
-  static getPosts(userId, startIndex = 0) {
-    return ApiService.request(
-      `${this.BASE_URL}?userId=${userId}&startIndex=${startIndex}`
-    );
+  static getPosts(params = {}) {
+    const urlParams = new URLSearchParams();
+
+    if (params.userId) {
+      urlParams.append("userId", params.userId);
+    }
+    if (params.startIndex) {
+      urlParams.append("startIndex", params.startIndex);
+    }
+    if (params.limit) {
+      urlParams.append("limit", params.limit);
+    }
+
+    return ApiService.request(`${this.BASE_URL}?${urlParams.toString()}`);
   }
 
   static getPostById(postId) {
