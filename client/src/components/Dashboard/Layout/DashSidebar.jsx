@@ -4,7 +4,8 @@ import {
   HiUser,
   HiArrowSmRight,
   HiDocumentText,
-  HiUserGroup,
+  HiOutlineUserGroup,
+  HiAnnotation,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../../../hooks/auth/useLogout";
@@ -54,11 +55,22 @@ const DashSidebar = () => {
                 <Sidebar.Item
                   as="div"
                   active={tab === "users"}
-                  icon={HiUserGroup}
+                  icon={HiOutlineUserGroup}
                   label={"Users"}
                   labelColor="dark"
                 >
                   Users
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  as="div"
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  label={"Comments"}
+                  labelColor="dark"
+                >
+                  Comments
                 </Sidebar.Item>
               </Link>
             </>

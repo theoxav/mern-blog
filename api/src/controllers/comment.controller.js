@@ -1,6 +1,24 @@
 import CommentRepository from "../repositories/comment.repository.js";
 import { errorHandler } from "../utils/error.js";
 
+export const getComments = async (req, res, next) => {
+  try {
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 9;
+    const sortDirection = req.query.sortDirection === "asc" ? 1 : -1;
+
+    const { comments, totalComments, lastMonthComments } =
+      await CommentRepository.getComments(startIndex, limit, sortDirection);
+
+    res.status(200).json({
+      comments,
+      totalComments,
+      lastMonthComments,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 export const getPostComments = async (req, res, next) => {
   try {
     const comments = await CommentRepository.getPostComments(req.params.postId);

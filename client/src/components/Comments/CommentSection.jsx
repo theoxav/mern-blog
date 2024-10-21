@@ -35,7 +35,7 @@ export default function CommentSection({ postId }) {
   useEffect(() => {
     const getComments = async () => {
       try {
-        const data = await CommentService.getAll(postId);
+        const data = await CommentService.getPostComments(postId);
         setComments(data);
       } catch (e) {
         console.error("Failed to get comments: ", e);
