@@ -1,6 +1,16 @@
 import UserRepository from "../repositories/user.repository.js";
 import { hashPassword } from "../utils/auth.js";
 
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await UserRepository.findUserById(req.params.userId);
+    const { password, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch (e) {
+    next(e);
+  }
+};
+
 export const getUsers = async (req, res, next) => {
   try {
     const users = await UserRepository.getUsers(req.query);

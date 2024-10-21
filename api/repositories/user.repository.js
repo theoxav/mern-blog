@@ -27,6 +27,10 @@ class UserRepository {
     return { users: usersWithoutPassword, totalUsers, lastMonthUsers };
   }
 
+  static async findUserById(userId) {
+    return User.findById(userId);
+  }
+
   static async findUserByEmail(email) {
     return User.findOne({ email });
   }

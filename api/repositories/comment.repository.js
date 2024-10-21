@@ -1,6 +1,10 @@
 import Comment from "../models/comment.model.js";
 
 class CommentRepository {
+  static async getPostComments(postId) {
+    return Comment.find({ postId }).sort({ createdAt: -1 });
+  }
+
   static async create({ content, postId, userId }) {
     const comment = new Comment({ content, postId, userId });
     return comment.save();

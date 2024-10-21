@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteUser,
+  getUser,
   getUsers,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -22,5 +23,6 @@ router.put(
   updateUser
 );
 router.delete("/delete/:userId", isAuthenticated, isAdmin, deleteUser);
+router.get("/:userId", getUser);
 
 export default router;

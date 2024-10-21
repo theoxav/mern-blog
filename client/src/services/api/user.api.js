@@ -1,6 +1,9 @@
 import ApiService from "./api";
 
 class UserService {
+  static getUser(userId) {
+    return ApiService.request(`/api/users/${userId}`);
+  }
   static getUsers(startIndex = 0) {
     return ApiService.request(`/api/users?startIndex=${startIndex}`);
   }
