@@ -11,6 +11,14 @@ class CommentService {
     return ApiService.request(`${this.BASE_URL}/create`, "POST", formData);
   }
 
+  static editComment(commentId, formData) {
+    return ApiService.request(
+      `${this.BASE_URL}/editComment/${commentId}`,
+      "PUT",
+      formData
+    );
+  }
+
   static likeComment(commentId) {
     return ApiService.request(
       `${this.BASE_URL}/likeComment/${commentId}`,
