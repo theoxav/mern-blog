@@ -1,20 +1,25 @@
 import ApiService from "./api";
 
 class AuthService {
+  static BASE_URL = "/api/auth";
+
   static register(formData) {
-    return ApiService.request("/api/auth/signup", "POST", formData);
+    return ApiService.request(`${this.BASE_URL}/signup`, "POST", formData);
   }
 
   static signin(formData) {
-    return ApiService.request("/api/auth/signin", "POST", formData);
+    return ApiService.request(`${this.BASE_URL}/signin`, "POST", formData);
   }
 
   static logout() {
-    return ApiService.request("/api/auth/signout", "POST");
+    return ApiService.request(`${this.BASE_URL}/signout`, "POST");
   }
 
   static deleteAccount(userId) {
-    return ApiService.request(`/api/auth/delete-account/${userId}`, "DELETE");
+    return ApiService.request(
+      `${this.BASE_URL}/delete-account/${userId}`,
+      "DELETE"
+    );
   }
 }
 

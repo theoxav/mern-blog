@@ -1,12 +1,21 @@
 import ApiService from "./api";
 
 class CommentService {
+  static BASE_URL = "/api/comments";
+
   static getAll(postId) {
-    return ApiService.request(`/api/comments/${postId}`);
+    return ApiService.request(`${this.BASE_URL}/${postId}`);
   }
 
   static create(formData) {
-    return ApiService.request("/api/comments/create", "POST", formData);
+    return ApiService.request(`${this.BASE_URL}/create`, "POST", formData);
+  }
+
+  static likeComment(commentId) {
+    return ApiService.request(
+      `${this.BASE_URL}/likeComment/${commentId}`,
+      "PUT"
+    );
   }
 }
 

@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import CommentService from "../../services/api/comment.api";
 import { useEffect, useState } from "react";
 import CommentItem from "./CommentItem";
 export default function CommentSection({ postId }) {
+  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
@@ -40,6 +41,29 @@ export default function CommentSection({ postId }) {
 
     getComments();
   }, [postId]);
+
+  const handleLike = async (commentId) => {
+    try {
+      if (!currentUser) {
+        navigate("/sign-in");
+        return;
+      }
+      const data = await CommentService.likeComment(commentId);
+      setComments(
+        comments.map((comment) =>
+          comment._id === commentId
+            ? {
+                ...comment,
+                likes: data.likes,
+                numberOfLikes: data.likes.length,
+              }
+            : comment
+        )
+      );
+    } catch (e) {
+      console.error("Failed to like comment: ", e);
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
@@ -86,7 +110,11 @@ export default function CommentSection({ postId }) {
           </div>
 
           {comments.map((comment) => (
-            <CommentItem key={comment._id} comment={comment} />
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              onLike={handleLike}
+            />
           ))}
         </>
       )}

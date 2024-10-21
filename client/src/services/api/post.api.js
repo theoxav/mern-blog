@@ -1,30 +1,32 @@
 import ApiService from "./api";
 
 class PostService {
+  static BASE_URL = "/api/posts";
+
   static getPosts(userId, startIndex = 0) {
     return ApiService.request(
-      `/api/posts?userId=${userId}&startIndex=${startIndex}`
+      `${this.BASE_URL}?userId=${userId}&startIndex=${startIndex}`
     );
   }
 
   static getPostById(postId) {
-    return ApiService.request(`/api/posts/${postId}`);
+    return ApiService.request(`${this.BASE_URL}/${postId}`);
   }
 
   static getPostBySlug(postSlug) {
-    return ApiService.request(`/api/posts/slug/${postSlug}`);
+    return ApiService.request(`${this.BASE_URL}/slug/${postSlug}`);
   }
 
   static create(formData) {
-    return ApiService.request("/api/posts/create", "POST", formData);
+    return ApiService.request(`${this.BASE_URL}/create`, "POST", formData);
   }
 
   static update(postId, formData) {
-    return ApiService.request(`/api/posts/${postId}`, "PUT", formData);
+    return ApiService.request(`${this.BASE_URL}/${postId}`, "PUT", formData);
   }
 
   static deletePost(postId) {
-    return ApiService.request(`/api/posts/${postId}`, "DELETE");
+    return ApiService.request(`${this.BASE_URL}/${postId}`, "DELETE");
   }
 }
 
