@@ -6,6 +6,7 @@ import {
   HiDocumentText,
   HiOutlineUserGroup,
   HiAnnotation,
+  HiChartPie,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../../../hooks/auth/useLogout";
@@ -27,12 +28,24 @@ const DashSidebar = () => {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {currentUser && currentUser.isAdmin && (
+            <Link to="/dashboard?tab=dash">
+              <Sidebar.Item
+                as="div"
+                active={tab === "dash" || !tab}
+                icon={HiChartPie}
+                labelColor="dark"
+              >
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
               as="div"
               active={tab === "profile"}
               icon={HiUser}
-              label={currentUser.isAdmin ? "Admin" : "User"}
+              label={currentUser.isAdmin ? "Admin" : ""}
               labelColor="dark"
             >
               Profile
@@ -45,7 +58,6 @@ const DashSidebar = () => {
                   as="div"
                   active={tab === "posts"}
                   icon={HiDocumentText}
-                  label={"Posts"}
                   labelColor="dark"
                 >
                   Posts
@@ -56,7 +68,6 @@ const DashSidebar = () => {
                   as="div"
                   active={tab === "users"}
                   icon={HiOutlineUserGroup}
-                  label={"Users"}
                   labelColor="dark"
                 >
                   Users
@@ -67,7 +78,6 @@ const DashSidebar = () => {
                   as="div"
                   active={tab === "comments"}
                   icon={HiAnnotation}
-                  label={"Comments"}
                   labelColor="dark"
                 >
                   Comments
