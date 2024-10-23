@@ -15,7 +15,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Javascript",
+    category: "javascript",
     slug: "understanding-closures-javascript",
     userId: adminUserId,
   },
@@ -36,7 +36,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React.js",
+    category: "react.js",
     slug: "building-reusable-components-react",
     userId: adminUserId,
   },
@@ -52,7 +52,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Next.js",
+    category: "next.js",
     slug: "server-side-rendering-nextjs",
     userId: adminUserId,
   },
@@ -73,7 +73,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Javascript",
+    category: "javascript",
     slug: "async-await-javascript-guide",
     userId: adminUserId,
   },
@@ -94,7 +94,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React.js",
+    category: "react.js",
     slug: "managing-state-react-hooks",
     userId: adminUserId,
   },
@@ -115,7 +115,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "APIs",
+    category: "apis",
     slug: "introduction-restful-apis",
     userId: adminUserId,
   },
@@ -137,7 +137,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "TypeScript",
+    category: "typeScript",
     slug: "exploring-typescript",
     userId: adminUserId,
   },
@@ -158,7 +158,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Web Development",
+    category: "coding",
     slug: "enhancing-user-experience-responsive-design",
     userId: adminUserId,
   },
@@ -179,7 +179,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Coding",
+    category: "coding",
     slug: "best-practices-clean-code",
     userId: adminUserId,
   },
@@ -199,7 +199,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React.js",
+    category: "react.js",
     slug: "introduction-to-react-hooks",
     userId: adminUserId,
   },
@@ -219,7 +219,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Javascript",
+    category: "javascript",
     slug: "understanding-promises",
     userId: adminUserId,
   },
@@ -240,7 +240,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Node.js",
+    category: "node.js",
     slug: "building-restful-apis",
     userId: adminUserId,
   },
@@ -260,7 +260,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React.js",
+    category: "react.js",
     slug: "optimizing-react-performance",
     userId: adminUserId,
   },
@@ -281,7 +281,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "TypeScript",
+    category: "typeScript",
     slug: "typescript-decorators",
     userId: adminUserId,
   },
@@ -302,7 +302,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "APIs",
+    category: "apis",
     slug: "introduction-to-graphql",
     userId: adminUserId,
   },
@@ -323,7 +323,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "React.js",
+    category: "react.js",
     slug: "virtual-dom-in-react",
     userId: adminUserId,
   },
@@ -343,7 +343,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Javascript",
+    category: "javascript",
     slug: "effective-error-handling",
     userId: adminUserId,
   },
@@ -364,7 +364,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "Javascript",
+    category: "javascript",
     slug: "asynchronous-javascript",
     userId: adminUserId,
   },
@@ -386,7 +386,7 @@ const posts = (adminUserId) => [
     `,
     image:
       "https://cdn.pixabay.com/photo/2016/08/23/10/16/program-1613990_1280.png",
-    category: "CSS",
+    category: "css",
     slug: "css-flexbox-guide",
     userId: adminUserId,
   },

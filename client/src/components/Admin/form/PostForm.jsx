@@ -144,14 +144,14 @@ export default function PostForm({ post = null }) {
           value={formData.category}
         >
           <option value="uncategorized">Select Category</option>
-          <option value="Javascript">JavaScript</option>
-          <option value="Node.js">Node.js</option>
-          <option value="TypeScript">TypeScript</option>
-          <option value="React.js">React.js</option>
-          <option value="Next.js">Next.js</option>
-          <option value="APIs">APIs</option>
-          <option value="CSS">CSS</option>
-          <option value="Coding">Coding</option>
+          <option value="javascript">JavaScript</option>
+          <option value="node.js">Node.js</option>
+          <option value="typeScript">TypeScript</option>
+          <option value="react.js">React.js</option>
+          <option value="next.js">Next.js</option>
+          <option value="apis">APIs</option>
+          <option value="css">CSS</option>
+          <option value="coding">Coding</option>
         </Select>
       </div>
 

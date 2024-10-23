@@ -1,7 +1,7 @@
 import { Spinner } from "flowbite-react";
 
 const Loading = () => (
-  <div className="flex items-center justify-center h-screen">
+  <div className="mx-auto">
     <div className="text-center">
       <Spinner
         color="purple"

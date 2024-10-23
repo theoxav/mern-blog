@@ -2,9 +2,13 @@ import PostRepository from "../repositories/post.repository.js";
 
 export const getPosts = async (req, res, next) => {
   try {
-    const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 9;
-    const sortDirection = req.query.order === "asc" ? 1 : -1;
+    const startIndex = isNaN(parseInt(req.query.startIndex))
+      ? 0
+      : parseInt(req.query.startIndex);
+    const limit = isNaN(parseInt(req.query.limit))
+      ? 9
+      : parseInt(req.query.limit);
+    const sortDirection = req.query.sort === "asc" ? 1 : -1;
 
     const { posts, totalPosts, lastMonthPosts } = await PostRepository.getAll(
       req.query,

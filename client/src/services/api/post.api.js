@@ -16,6 +16,18 @@ class PostService {
       urlParams.append("limit", params.limit);
     }
 
+    if (params.searchTerm) {
+      urlParams.append("searchTerm", params.searchTerm);
+    }
+
+    if (params.sort) {
+      urlParams.append("sort", params.sort);
+    }
+
+    if (params.category) {
+      urlParams.append("category", params.category);
+    }
+
     return ApiService.request(`${this.BASE_URL}?${urlParams.toString()}`);
   }
 

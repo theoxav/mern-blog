@@ -14,7 +14,7 @@ class CommentService {
     }
 
     if (params.sortDirection) {
-      urlParams.append("sortDirection", params.sortDirection);
+      urlParams.append("sort", params.sortDirection);
     }
 
     return ApiService.request(`${this.BASE_URL}?${urlParams.toString()}`);
