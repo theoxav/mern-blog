@@ -1,6 +1,6 @@
-# MERN Blog
+# PostMatic
 
-MERN Blog est une application de blog moderne construite avec la stack MERN (MongoDB, Express, React, Node.js). Elle permet aux utilisateurs de créer, lire, mettre à jour et supprimer des articles, tout en offrant une expérience utilisateur fluide et agréable.
+PostMatic est une application de blog moderne construite avec la stack MERN (MongoDB, Express, React, Node.js). Elle permet aux utilisateurs de créer, lire, mettre à jour et supprimer des articles, tout en offrant une expérience utilisateur fluide et agréable.
 
 ## Fonctionnalités
 
@@ -88,3 +88,58 @@ VITE_FIREBASE_API_KEY=
 
 - **Backend**: Node.js, Express, MongoDB, JWT, Bcrypt, Express-Validator
 - **Frontend**: React, Redux, React Hook Form, Yup, Tailwind CSS, Flowbite, React-Quill, Firebase, i18next
+
+## Screenshots
+
+Here are some screenshots of the application:
+
+<div align="center" style="margin-bottom: 20px;">
+  <h2 style="text-decoration: underline;">Home Page</h2>
+  <img src="./client/src/assets/demo/home-desktop.png" alt="Home" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/home.png" alt="Home" style="margin: 10px;" />
+</div>
+
+<div align="center" style="margin-bottom: 20px;">
+  <h2 style="text-decoration: underline;">Posts Page</h2>
+  <img src="./client/src/assets/demo/posts-desktop.png" alt="Posts" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/post-details.png" alt="Post" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/search-posts.png" alt="Post" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/comments.png" alt="Post" style="margin: 10px;" />
+</div>
+
+**Auth pages** :
+
+<div align="center" style="margin-bottom: 20px;">
+  <h2 style="text-decoration: underline;">Register and Signin</h2>
+  <img src="./client/src/assets/demo/register.png" alt="Register" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/signin.png" alt="Signin" style="margin: 10px;" />
+</div>
+
+**Protected Pages** :
+
+**Not admin**
+
+<div align="center" style="margin-bottom: 20px;">
+  <h2 style="text-decoration: underline;">Not Admin Dashboard</h2>
+  <img src="./client/src/assets/demo/not-admin-dashboard.png" alt="Dashboard" style="margin: 10px;" />
+</div>
+
+**Admin**
+
+<div align="center" style="margin-bottom: 20px;">
+  <h2 style="text-decoration: underline;">Admin Dashboard</h2>
+  <img src="./client/src/assets/demo/dashboard-admin.png" alt="AdminDashboard" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/profil-page.png" alt="AdminDashboard" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/user-manage.png" alt="UserManage" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/posts-manage.png" alt="PostManage" style="margin: 10px;" />
+  <hr style="border: 2px solid white; width: 80%;">
+  <img src="./client/src/assets/demo/add-post.png" alt="AddPost" style="margin: 10px;" />
+</div>
