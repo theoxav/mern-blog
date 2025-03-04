@@ -1,11 +1,11 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IoSearchOutline } from "react-icons/io5";
-import { FaMoon, FaSun } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../../redux/theme/themeSlice";
-import { useLogout } from "../../hooks/auth/useLogout";
-import { useEffect, useState } from "react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { IoSearchOutline } from 'react-icons/io5';
+import { FaMoon, FaSun } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../../redux/theme/themeSlice';
+import { useLogout } from '../../hooks/auth/useLogout';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
   const path = useLocation().pathname;
@@ -14,20 +14,20 @@ const Header = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { handleSignout } = useLogout();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get("searchTerm");
+    const searchTermFromUrl = urlParams.get('searchTerm');
     if (searchTermFromUrl) setSearchTerm(searchTermFromUrl);
   }, [location.search]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("searchTerm", searchTerm);
+    urlParams.set('searchTerm', searchTerm);
     const search = urlParams.toString();
     navigate(`/search?${search}`);
   };
@@ -39,9 +39,8 @@ const Header = () => {
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
         <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-          TheoXav
+          PostMatic
         </span>
-        Blog
       </Link>
       <form onSubmit={handleSubmit}>
         <TextInput
@@ -63,7 +62,7 @@ const Header = () => {
           pill
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? <FaMoon /> : <FaSun />}
+          {theme === 'light' ? <FaMoon /> : <FaSun />}
         </Button>
         {currentUser ? (
           <Dropdown
@@ -79,7 +78,7 @@ const Header = () => {
                 {currentUser.email}
               </span>
             </Dropdown.Header>
-            <Link to={"/dashboard?tab=profile"}>
+            <Link to={'/dashboard?tab=profile'}>
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
@@ -95,13 +94,13 @@ const Header = () => {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link active={path === "/"} as={"div"}>
+        <Navbar.Link active={path === '/'} as={'div'}>
           <Link to="/">Home</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/about"} as={"div"}>
+        <Navbar.Link active={path === '/about'} as={'div'}>
           <Link to="/about">About</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/projects"} as={"div"}>
+        <Navbar.Link active={path === '/projects'} as={'div'}>
           <Link to="/projects">Projects</Link>
         </Navbar.Link>
       </Navbar.Collapse>
