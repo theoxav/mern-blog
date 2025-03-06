@@ -2,13 +2,12 @@
 
 PostMatic est une application de blog moderne construite avec la stack MERN (MongoDB, Express, React, Node.js). Elle permet aux utilisateurs de créer, lire, mettre à jour et supprimer des articles, tout en offrant une expérience utilisateur fluide et agréable.
 
-## Fonctionnalités
 
 ### Backend
 
-- **Authentification sécurisée** : Utilisation de JSON Web Tokens (JWT) pour sécuriser les endpoints d'API.
+- **Authentification et Autorisation** : Utilisation de JSON Web Tokens (JWT) pour sécuriser les endpoints d'API et gérer les rôles des utilisateurs (administrateur et utilisateur).
 - **Gestion des utilisateurs** : Création de faux utilisateurs grâce à une API externe, facilitant le développement et les tests.
-- **Validation des données** : Protection des requêtes avec `express-validator`.
+- **Validation des données** : Protection des requêtes avec `express-validator` pour garantir l'intégrité des données.
 - **Cryptage des mots de passe** : Utilisation de `bcrypt` pour sécuriser les mots de passe des utilisateurs.
 
 ### Frontend
@@ -20,6 +19,19 @@ PostMatic est une application de blog moderne construite avec la stack MERN (Mon
 - **Téléversement de fichiers** : Utilisation de `Firebase` pour l'upload d'images et l'authentification via Google.
 - **Navigation fluide** : Utilisation de `React Router` pour gérer la navigation, avec des loaders pour le chargement des données.
 - **Linting** : Utilisation de `ESLint` pour garantir un code propre et conforme aux meilleures pratiques.
+
+### Fonctionnalités Utilisateurs
+
+- **Création de compte** : Les utilisateurs peuvent créer un compte pour commenter les articles et les liker.
+- **Commentaire et Like** : Les utilisateurs peuvent commenter les articles et les liker pour interagir avec le contenu.
+
+### Fonctionnalités Administrateur
+
+- **Dashboard Administrateur** : Les administrateurs ont accès à un tableau de bord pour gérer les articles, les utilisateurs et les commentaires.
+- **Gestion des articles** : Les administrateurs peuvent créer, modifier et supprimer des articles.
+- **Gestion des utilisateurs** : Les administrateurs peuvent supprimer des utilisateurs.
+- **Gestion des commentaires** : Les administrateurs peuvent modifier ou supprimer des commentaires.
+
 
 ## Installation
 
